@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>文档中心 | DoglinkOS-2nd</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            body {
+                background: linear-gradient(135deg, #0f172a, #1e293b);
+                color: #f1f5f9;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                overflow-x: hidden;
+            }
+
+            #particles-js {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                z-index: 1;
+            }
+
+            header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 0;
+                border-bottom: 1px solid rgba(100, 116, 139, 0.3);
+            }
+
+            .logo {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .logo-icon {
+                font-size: 2.5rem;
+                color: #60a5fa;
+            }
+
+            .logo-text {
+                font-size: 1.8rem;
+                font-weight: 700;
+                background: linear-gradient(to right, #60a5fa, #3b82f6);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+
+            nav ul {
+                display: flex;
+                list-style: none;
+                gap: 30px;
+            }
+
+            nav a {
+                color: #cbd5e1;
+                text-decoration: none;
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
+                position: relative;
+                padding: 5px 0;
+            }
+
+            nav a:hover {
+                color: #60a5fa;
+            }
+
+            nav a::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: #60a5fa;
+                transition: width 0.3s ease;
+            }
+
+            nav a:hover::after {
+                width: 100%;
+            }
+
+            .page-header {
+                text-align: center;
+                margin: 60px 0 40px;
+            }
+
+            .page-header h1 {
+                font-size: 3.5rem;
+                background: linear-gradient(to right, #a5b4fc, #60a5fa);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                margin-bottom: 20px;
+            }
+
+            .page-header p {
+                font-size: 1.3rem;
+                color: #94a3b8;
+                max-width: 800px;
+                margin: 0 auto;
+                line-height: 1.6;
+            }
+
+            .docs-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                gap: 30px;
+                margin: 40px 0;
+            }
+
+            .docs-category {
+                background: rgba(30, 41, 59, 0.6);
+                border-radius: 15px;
+                padding: 30px;
+                border: 1px solid rgba(100, 116, 139, 0.3);
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .docs-category:hover {
+                transform: translateY(-10px);
+                background: rgba(30, 41, 59, 0.8);
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            }
+
+            .category-header {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                margin-bottom: 25px;
+                padding-bottom: 15px;
+                border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+            }
+
+            .category-icon {
+                font-size: 2.5rem;
+                color: #60a5fa;
+                width: 60px;
+                height: 60px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(37, 99, 235, 0.1);
+                border-radius: 50%;
+            }
+
+            .category-title {
+                font-size: 1.8rem;
+                color: #e2e8f0;
+                font-weight: 600;
+            }
+
+            .docs-list {
+                list-style: none;
+            }
+
+            .docs-item {
+                padding: 15px 0;
+                border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+                transition: all 0.3s ease;
+            }
+
+            .docs-item:last-child {
+                border-bottom: none;
+            }
+
+            .docs-item:hover {
+                padding-left: 10px;
+                border-left: 3px solid #60a5fa;
+            }
+
+            .docs-item a {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                color: #cbd5e1;
+                text-decoration: none;
+                font-size: 1.1rem;
+                transition: all 0.2s ease;
+            }
+
+            .docs-item a:hover {
+                color: #60a5fa;
+            }
+
+            .docs-item i {
+                color: #60a5fa;
+                font-size: 1.1rem;
+                width: 25px;
+                text-align: center;
+            }
+
+            .doc-title {
+                font-weight: 500;
+            }
+
+            .doc-meta {
+                display: block;
+                font-size: 0.9rem;
+                color: #94a3b8;
+                margin-top: 5px;
+                margin-left: 37px;
+            }
+
+            .search-section {
+                background: rgba(30, 41, 59, 0.7);
+                border-radius: 15px;
+                padding: 30px;
+                margin: 50px auto;
+                max-width: 800px;
+                border: 1px solid rgba(59, 130, 246, 0.3);
+                text-align: center;
+            }
+
+            .search-section h2 {
+                font-size: 2rem;
+                color: #e2e8f0;
+                margin-bottom: 25px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .search-box {
+                display: flex;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .search-box input {
+                flex: 1;
+                padding: 15px 20px;
+                border: none;
+                border-radius: 50px 0 0 50px;
+                background: rgba(15, 23, 42, 0.8);
+                color: #e2e8f0;
+                font-size: 1.1rem;
+                outline: none;
+            }
+
+            .search-box input::placeholder {
+                color: #94a3b8;
+            }
+
+            .search-box button {
+                padding: 0 30px;
+                background: linear-gradient(to right, #2563eb, #3b82f6);
+                color: white;
+                border: none;
+                border-radius: 0 50px 50px 0;
+                font-size: 1.1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .search-box button:hover {
+                background: linear-gradient(to right, #1d4ed8, #2563eb);
+            }
+
+            .popular-docs {
+                margin-top: 40px;
+            }
+
+            .popular-docs h3 {
+                color: #60a5fa;
+                margin-bottom: 20px;
+                font-size: 1.3rem;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                justify-content: center;
+            }
+
+            .popular-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                justify-content: center;
+                margin-top: 20px;
+            }
+
+            .tag {
+                display: inline-block;
+                padding: 8px 20px;
+                background: rgba(37, 99, 235, 0.1);
+                color: #60a5fa;
+                border-radius: 50px;
+                font-size: 0.95rem;
+                transition: all 0.3s ease;
+                text-decoration: none;
+            }
+
+            .tag:hover {
+                background: rgba(59, 130, 246, 0.3);
+                transform: translateY(-3px);
+            }
+
+            .back-home {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                margin: 30px 0 50px;
+                color: #60a5fa;
+                text-decoration: none;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                padding: 10px 20px;
+                border: 1px solid rgba(59, 130, 246, 0.3);
+                border-radius: 50px;
+            }
+
+            .back-home:hover {
+                gap: 12px;
+                color: #a5b4fc;
+                background: rgba(59, 130, 246, 0.1);
+            }
+
+            .back-home i {
+                transition: transform 0.3s ease;
+            }
+
+            .back-home:hover i {
+                transform: translateX(-5px);
+            }
+
+            footer {
+                text-align: center;
+                padding: 30px 0;
+                margin-top: auto;
+                color: #64748b;
+                font-size: 1rem;
+                border-top: 1px solid rgba(100, 116, 139, 0.2);
+            }
+
+            /* 响应式设计 */
+            @media (max-width: 900px) {
+                .docs-container {
+                    grid-template-columns: repeat(
+                        auto-fill,
+                        minmax(300px, 1fr)
+                    );
+                }
+            }
+
+            @media (max-width: 768px) {
+                header {
+                    flex-direction: column;
+                    gap: 20px;
+                }
+
+                nav ul {
+                    gap: 15px;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                }
+
+                .page-header h1 {
+                    font-size: 2.5rem;
+                }
+
+                .page-header p {
+                    font-size: 1.1rem;
+                }
+
+                .category-header {
+                    flex-direction: column;
+                    text-align: center;
+                    gap: 10px;
+                }
+
+                .category-icon {
+                    margin: 0 auto;
+                }
+
+                .search-box {
+                    flex-direction: column;
+                    gap: 15px;
+                }
+
+                .search-box input,
+                .search-box button {
+                    border-radius: 50px;
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 粒子背景 -->
+        <div id="particles-js"></div>
+
+        <div class="container">
+            <header>
+                <div class="logo">
+                    <i class="fas fa-dog logo-icon"></i>
+                    <div class="logo-text">DoglinkOS-2nd</div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="features.html">特性</a></li>
+                        <li><a href="documents.html">文档</a></li>
+                        <li><a href="community.html">社区</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="page-header">
+                    <h1>文档中心</h1>
+                    <p>
+                        探索DoglinkOS-2nd的完整文档资源，从入门指南到高级开发，一切尽在此处
+                    </p>
+                </div>
+
+                <div class="docs-container">
+                    <!-- 入门指南 -->
+                    <div class="docs-category">
+                        <div class="category-header">
+                            <div class="category-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <h2 class="category-title">入门指南</h2>
+                        </div>
+                        <ul class="docs-list">
+                            <li class="docs-item">
+                                <a
+                                    href="https://docs.plos-clan.org/project/DoglinkOS-2nd.html"
+                                >
+                                    <i class="fas fa-file-alt"></i>
+                                    <span class="doc-title"
+                                        >DoglinkOS-2nd 快速入门</span
+                                    >
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-20 · 阅读时间
+                                        15分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-download"></i>
+                                    <span class="doc-title">系统安装手册</span>
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-15 · 阅读时间
+                                        25分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-cogs"></i>
+                                    <span class="doc-title">首次配置指南</span>
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-10 · 阅读时间
+                                        20分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-sync-alt"></i>
+                                    <span class="doc-title"
+                                        >从旧版迁移指南</span
+                                    >
+                                    <span class="doc-meta"
+                                        >更新于 2025-10-28 · 阅读时间
+                                        30分钟</span
+                                    >
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 用户手册 -->
+                    <div class="docs-category">
+                        <div class="category-header">
+                            <div class="category-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h2 class="category-title">用户手册</h2>
+                        </div>
+                        <ul class="docs-list">
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-desktop"></i>
+                                    <span class="doc-title"
+                                        >桌面环境使用指南</span
+                                    >
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-18 · 阅读时间
+                                        40分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-wrench"></i>
+                                    <span class="doc-title">系统设置详解</span>
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-12 · 阅读时间
+                                        35分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-network-wired"></i>
+                                    <span class="doc-title">网络配置手册</span>
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-05 · 阅读时间
+                                        25分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span class="doc-title"
+                                        >安全与隐私设置</span
+                                    >
+                                    <span class="doc-meta"
+                                        >更新于 2025-10-30 · 阅读时间
+                                        30分钟</span
+                                    >
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 开发文档 -->
+                    <div class="docs-category">
+                        <div class="category-header">
+                            <div class="category-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h2 class="category-title">开发文档</h2>
+                        </div>
+                        <ul class="docs-list">
+                            <li class="docs-item">
+                                <a
+                                    href="https://docs.plos-clan.org/devlop/dlos_syscalls.html"
+                                >
+                                    <i class="fas fa-book"></i>
+                                    <span class="doc-title">API参考手册</span>
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-22 · 阅读时间
+                                        60分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-terminal"></i>
+                                    <span class="doc-title"
+                                        >系统内核开发指南</span
+                                    >
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-15 · 阅读时间
+                                        45分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-plug"></i>
+                                    <span class="doc-title">驱动程序开发</span>
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-08 · 阅读时间
+                                        50分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-box"></i>
+                                    <span class="doc-title"
+                                        >软件包管理规范</span
+                                    >
+                                    <span class="doc-meta"
+                                        >更新于 2025-10-25 · 阅读时间
+                                        30分钟</span
+                                    >
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 系统管理 -->
+                    <div class="docs-category">
+                        <div class="category-header">
+                            <div class="category-icon">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <h2 class="category-title">系统管理</h2>
+                        </div>
+                        <ul class="docs-list">
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-terminal"></i>
+                                    <span class="doc-title"
+                                        >命令行工具手册</span
+                                    >
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-19 · 阅读时间
+                                        50分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-tools"></i>
+                                    <span class="doc-title"
+                                        >系统维护与更新</span
+                                    >
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-14 · 阅读时间
+                                        30分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-database"></i>
+                                    <span class="doc-title">存储管理指南</span>
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-07 · 阅读时间
+                                        35分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-user-shield"></i>
+                                    <span class="doc-title"
+                                        >用户与权限管理</span
+                                    >
+                                    <span class="doc-meta"
+                                        >更新于 2025-10-29 · 阅读时间
+                                        25分钟</span
+                                    >
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 社区资源 -->
+                    <div class="docs-category">
+                        <div class="category-header">
+                            <div class="category-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h2 class="category-title">社区资源</h2>
+                        </div>
+                        <ul class="docs-list">
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-hands-helping"></i>
+                                    <span class="doc-title">贡献指南</span>
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-21 · 阅读时间
+                                        20分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-book"></i>
+                                    <span class="doc-title">社区规范</span>
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-13 · 阅读时间
+                                        15分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-bug"></i>
+                                    <span class="doc-title">问题报告流程</span>
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-06 · 阅读时间
+                                        15分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <span class="doc-title">最佳实践案例</span>
+                                    <span class="doc-meta"
+                                        >更新于 2025-10-27 · 阅读时间
+                                        40分钟</span
+                                    >
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 高级主题 -->
+                    <div class="docs-category">
+                        <div class="category-header">
+                            <div class="category-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h2 class="category-title">高级主题</h2>
+                        </div>
+                        <ul class="docs-list">
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-microchip"></i>
+                                    <span class="doc-title">性能优化指南</span>
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-17 · 阅读时间
+                                        45分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-lock"></i>
+                                    <span class="doc-title">高级安全配置</span>
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-11 · 阅读时间
+                                        50分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span class="doc-title">容器与虚拟化</span>
+                                    <span class="doc-meta"
+                                        >更新于 2025-11-04 · 阅读时间
+                                        55分钟</span
+                                    >
+                                </a>
+                            </li>
+                            <li class="docs-item">
+                                <a href="#">
+                                    <i class="fas fa-cloud"></i>
+                                    <span class="doc-title">云部署指南</span>
+                                    <span class="doc-meta"
+                                        >更新于 2025-10-26 · 阅读时间
+                                        40分钟</span
+                                    >
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="text-align: center">
+                    <a href="index.html" class="back-home">
+                        <i class="fas fa-arrow-left"></i> 返回首页
+                    </a>
+                </div>
+            </main>
+        </div>
+
+        <footer>
+            <p>© 2025 DoglinkOS-2nd 项目 | 遵循 GPLv3 开源协议 | 由社区驱动</p>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+        <script>
+            // 粒子背景配置
+            particlesJS("particles-js", {
+                particles: {
+                    number: {
+                        value: 70,
+                        density: { enable: true, value_area: 800 },
+                    },
+                    color: { value: "#60a5fa" },
+                    shape: {
+                        type: "circle",
+                        stroke: { width: 0, color: "#000000" },
+                    },
+                    opacity: { value: 0.4, random: true },
+                    size: { value: 3, random: true },
+                    move: {
+                        enable: true,
+                        speed: 1.8,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false,
+                    },
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "repulse" },
+                        onclick: { enable: true, mode: "push" },
+                        resize: true,
+                    },
+                },
+            });
+
+            // 文档项悬停效果
+            document.querySelectorAll(".docs-item").forEach((item) => {
+                item.addEventListener("mouseenter", function () {
+                    this.style.background = "rgba(59, 130, 246, 0.1)";
+                });
+
+                item.addEventListener("mouseleave", function () {
+                    this.style.background = "transparent";
+                });
+            });
+
+            // 搜索功能
+            document
+                .querySelector(".search-box button")
+                .addEventListener("click", function () {
+                    const searchTerm =
+                        document.querySelector(".search-box input").value;
+                    if (searchTerm.trim() !== "") {
+                        alert(
+                            `搜索: ${searchTerm}\n在实际应用中，这里将显示搜索结果`,
+                        );
+                    }
+                });
+
+            // 按回车键也可以搜索
+            document
+                .querySelector(".search-box input")
+                .addEventListener("keypress", function (e) {
+                    if (e.key === "Enter") {
+                        document.querySelector(".search-box button").click();
+                    }
+                });
+        </script>
+    </body>
+</html>

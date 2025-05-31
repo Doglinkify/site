@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>旧版下载 | DoglinkOS-2nd</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            body {
+                background: linear-gradient(135deg, #0f172a, #1e293b);
+                color: #f1f5f9;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                overflow-x: hidden;
+            }
+
+            #particles-js {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                z-index: 1;
+            }
+
+            header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 0;
+                border-bottom: 1px solid rgba(100, 116, 139, 0.3);
+            }
+
+            .logo {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .logo-icon {
+                font-size: 2.5rem;
+                color: #60a5fa;
+            }
+
+            .logo-text {
+                font-size: 1.8rem;
+                font-weight: 700;
+                background: linear-gradient(to right, #60a5fa, #3b82f6);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+
+            nav ul {
+                display: flex;
+                list-style: none;
+                gap: 30px;
+            }
+
+            nav a {
+                color: #cbd5e1;
+                text-decoration: none;
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
+                position: relative;
+                padding: 5px 0;
+            }
+
+            nav a:hover {
+                color: #60a5fa;
+            }
+
+            nav a::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: #60a5fa;
+                transition: width 0.3s ease;
+            }
+
+            nav a:hover::after {
+                width: 100%;
+            }
+
+            .page-header {
+                text-align: center;
+                margin: 50px 0 40px;
+            }
+
+            .page-header h1 {
+                font-size: 3.5rem;
+                background: linear-gradient(to right, #a5b4fc, #60a5fa);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                margin-bottom: 15px;
+            }
+
+            .page-header p {
+                font-size: 1.3rem;
+                color: #94a3b8;
+                max-width: 700px;
+                margin: 0 auto;
+                line-height: 1.6;
+            }
+
+            .versions-container {
+                background: rgba(30, 41, 59, 0.6);
+                border-radius: 15px;
+                padding: 30px;
+                margin: 30px auto;
+                border: 1px solid rgba(100, 116, 139, 0.3);
+            }
+
+            .version-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .version-table th {
+                background: rgba(37, 99, 235, 0.2);
+                color: #60a5fa;
+                padding: 15px;
+                text-align: left;
+                font-weight: 600;
+                font-size: 1.2rem;
+                border-bottom: 2px solid rgba(59, 130, 246, 0.5);
+            }
+
+            .version-table td {
+                padding: 15px;
+                border-bottom: 1px solid rgba(100, 116, 139, 0.3);
+                color: #cbd5e1;
+                transition: all 0.3s ease;
+            }
+
+            .version-table tr:hover td {
+                background: rgba(59, 130, 246, 0.1);
+                color: #e2e8f0;
+            }
+
+            .version-name {
+                font-weight: 600;
+                font-size: 1.1rem;
+            }
+
+            .version-date {
+                color: #94a3b8;
+            }
+
+            .download-btn {
+                display: inline-block;
+                padding: 8px 20px;
+                background: rgba(37, 99, 235, 0.2);
+                color: #60a5fa;
+                border-radius: 6px;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                border: 1px solid rgba(59, 130, 246, 0.3);
+            }
+
+            .download-btn:hover {
+                background: rgba(59, 130, 246, 0.3);
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
+            }
+
+            .note-box {
+                background: rgba(30, 41, 59, 0.8);
+                border-left: 4px solid #60a5fa;
+                padding: 20px;
+                border-radius: 0 8px 8px 0;
+                margin: 40px 0;
+            }
+
+            .note-box h3 {
+                color: #60a5fa;
+                margin-bottom: 10px;
+                font-size: 1.3rem;
+            }
+
+            .note-box p {
+                color: #94a3b8;
+                line-height: 1.7;
+            }
+
+            .back-home {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 30px;
+                color: #60a5fa;
+                text-decoration: none;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+
+            .back-home:hover {
+                gap: 12px;
+                color: #a5b4fc;
+            }
+
+            .back-home i {
+                transition: transform 0.3s ease;
+            }
+
+            .back-home:hover i {
+                transform: translateX(-5px);
+            }
+
+            footer {
+                text-align: center;
+                padding: 30px 0;
+                margin-top: auto;
+                color: #64748b;
+                font-size: 1rem;
+                border-top: 1px solid rgba(100, 116, 139, 0.2);
+            }
+
+            /* 响应式设计 */
+            @media (max-width: 768px) {
+                header {
+                    flex-direction: column;
+                    gap: 20px;
+                }
+
+                nav ul {
+                    gap: 15px;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                }
+
+                .page-header h1 {
+                    font-size: 2.5rem;
+                }
+
+                .page-header p {
+                    font-size: 1.1rem;
+                }
+
+                .version-table {
+                    display: block;
+                    overflow-x: auto;
+                }
+
+                .version-table th,
+                .version-table td {
+                    padding: 12px 10px;
+                    font-size: 0.95rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 粒子背景 -->
+        <div id="particles-js"></div>
+
+        <div class="container">
+            <header>
+                <div class="logo">
+                    <i class="fas fa-dog logo-icon"></i>
+                    <div class="logo-text">DoglinkOS-2nd</div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="features.html">特性</a></li>
+                        <li><a href="documents.html">文档</a></li>
+                        <li><a href="community.html">社区</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <section>
+                    <div class="page-header">
+                        <h1>历史版本下载</h1>
+                        <p>
+                            探索DoglinkOS-2nd的发展历程，下载过去的版本用于测试、开发或怀旧
+                        </p>
+                    </div>
+
+                    <div class="versions-container">
+                        <table class="version-table">
+                            <thead>
+                                <tr>
+                                    <th>版本名称</th>
+                                    <th>发布日期</th>
+                                    <th>下载链接</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="version-name">
+                                        DoglinkOS-2nd 0.0.2-20250213
+                                    </td>
+                                    <td class="version-date">2025-02-13</td>
+                                    <td>
+                                        <a
+                                            href="https://pan.312314.xyz/s/GrIx"
+                                            class="download-btn"
+                                            target="_blank"
+                                            >下载</a
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="version-name">
+                                        DoglinkOS-2nd 0.0.2-20250203
+                                    </td>
+                                    <td class="version-date">2025-02-03</td>
+                                    <td>
+                                        <a
+                                            href="https://pan.312314.xyz/s/lEC2"
+                                            class="download-btn"
+                                            target="_blank"
+                                            >下载</a
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="version-name">
+                                        DoglinkOS-2nd 0.0.2-20250202
+                                    </td>
+                                    <td class="version-date">2025-02-02</td>
+                                    <td>
+                                        <a
+                                            href="https://pan.312314.xyz/s/gmS9"
+                                            class="download-btn"
+                                            target="_blank"
+                                            >下载</a
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="version-name">
+                                        DoglinkOS-2nd 0.0.2-20250127
+                                    </td>
+                                    <td class="version-date">2025-01-27</td>
+                                    <td>
+                                        <a
+                                            href="https://pan.312314.xyz/s/b4sA"
+                                            class="download-btn"
+                                            target="_blank"
+                                            >下载</a
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="version-name">
+                                        DoglinkOS-2nd 0.0.2-20250118
+                                    </td>
+                                    <td class="version-date">2025-01-18</td>
+                                    <td>
+                                        <a
+                                            href="https://pan.312314.xyz/s/3nt1s"
+                                            class="download-btn"
+                                            target="_blank"
+                                            >下载</a
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="version-name">
+                                        DoglinkOS-2nd 0.0.2-20250112
+                                    </td>
+                                    <td class="version-date">2025-01-12</td>
+                                    <td>
+                                        <a
+                                            href="https://pan.312314.xyz/s/23Hz"
+                                            class="download-btn"
+                                            target="_blank"
+                                            >下载</a
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="version-name">
+                                        DoglinkOS-2nd 0.0.2-20250108
+                                    </td>
+                                    <td class="version-date">2025-01-08</td>
+                                    <td>
+                                        <a
+                                            href="https://pan.312314.xyz/s/e3ul"
+                                            class="download-btn"
+                                            target="_blank"
+                                            >下载</a
+                                        >
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="note-box">
+                        <h3><i class="fas fa-info-circle"></i> 重要提示</h3>
+                        <p>
+                            •
+                            旧版操作系统仅提供用于测试或开发目的，不建议在生产环境中使用<br />
+                            • 旧版本可能包含已知的安全漏洞和未修复的问题<br />
+                            •
+                            技术支持仅针对最新的稳定版本，旧版本将不再获得更新和安全补丁<br />
+                            •
+                            下载文件前请验证文件完整性，建议使用提供的SHA-256校验码进行验证
+                        </p>
+                    </div>
+
+                    <a href="index.html" class="back-home">
+                        <i class="fas fa-arrow-left"></i> 返回首页
+                    </a>
+                </section>
+            </main>
+        </div>
+
+        <footer>
+            <p>© 2025 DoglinkOS-2nd 项目 | 遵循 GPLv3 开源协议 | 由社区驱动</p>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+        <script>
+            // 粒子背景配置
+            particlesJS("particles-js", {
+                particles: {
+                    number: {
+                        value: 60,
+                        density: { enable: true, value_area: 800 },
+                    },
+                    color: { value: "#60a5fa" },
+                    shape: {
+                        type: "circle",
+                        stroke: { width: 0, color: "#000000" },
+                    },
+                    opacity: { value: 0.3, random: true },
+                    size: { value: 3, random: true },
+                    move: {
+                        enable: true,
+                        speed: 1.5,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false,
+                    },
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "repulse" },
+                        onclick: { enable: true, mode: "push" },
+                        resize: true,
+                    },
+                },
+            });
+
+            // 表格行悬停效果
+            document.querySelectorAll(".version-table tr").forEach((row) => {
+                row.addEventListener("mouseenter", function () {
+                    this.style.transform = "scale(1.01)";
+                    this.style.boxShadow = "0 5px 15px rgba(0, 0, 0, 0.1)";
+                });
+
+                row.addEventListener("mouseleave", function () {
+                    this.style.transform = "scale(1)";
+                    this.style.boxShadow = "none";
+                });
+            });
+        </script>
+    </body>
+</html>

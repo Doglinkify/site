@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>DoglinkOS-2nd | 开源操作系统</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            body {
+                background: linear-gradient(135deg, #0f172a, #1e293b);
+                color: #f1f5f9;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                overflow-x: hidden;
+            }
+
+            #particles-js {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                z-index: 1;
+            }
+
+            header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 0;
+            }
+
+            .logo {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .logo-icon {
+                font-size: 2.5rem;
+                color: #60a5fa;
+            }
+
+            .logo-text {
+                font-size: 1.8rem;
+                font-weight: 700;
+                background: linear-gradient(to right, #60a5fa, #3b82f6);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+
+            nav ul {
+                display: flex;
+                list-style: none;
+                gap: 30px;
+            }
+
+            nav a {
+                color: #cbd5e1;
+                text-decoration: none;
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
+                position: relative;
+                padding: 5px 0;
+            }
+
+            nav a:hover {
+                color: #60a5fa;
+            }
+
+            nav a::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: #60a5fa;
+                transition: width 0.3s ease;
+            }
+
+            nav a:hover::after {
+                width: 100%;
+            }
+
+            .hero {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                min-height: 80vh;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .typewriter-container {
+                margin-bottom: 50px;
+            }
+
+            .typewriter {
+                font-size: 4rem;
+                font-weight: 800;
+                margin-bottom: 20px;
+                background: linear-gradient(to right, #a5b4fc, #60a5fa);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                position: relative;
+            }
+
+            @media (max-width: 768px) {
+                .typewriter {
+                    font-size: 2.5rem;
+                }
+            }
+
+            .cursor {
+                display: inline-block;
+                width: 3px;
+                height: 4rem;
+                background: #60a5fa;
+                margin-left: 5px;
+                animation: blink 0.8s infinite;
+                vertical-align: text-bottom;
+            }
+
+            @keyframes blink {
+                0%,
+                100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0;
+                }
+            }
+
+            .subtitle {
+                font-size: 1.5rem;
+                color: #94a3b8;
+                max-width: 800px;
+                line-height: 1.6;
+                margin-bottom: 50px;
+            }
+
+            .buttons {
+                display: flex;
+                gap: 25px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .btn {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 15px 35px;
+                font-size: 1.2rem;
+                font-weight: 600;
+                border-radius: 50px;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                position: relative;
+            }
+
+            .btn-primary {
+                background: linear-gradient(to right, #2563eb, #3b82f6);
+                color: white;
+            }
+
+            .btn-secondary {
+                background: rgba(30, 41, 59, 0.7);
+                color: #e2e8f0;
+                border: 2px solid #334155;
+            }
+
+            .btn:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+            }
+
+            /* 下载下拉菜单样式 */
+            .download-dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .dropdown-content {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(15, 23, 42, 0.95);
+                border-radius: 12px;
+                padding: 10px 0;
+                margin-top: 10px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(10px);
+                transition: all 0.3s ease;
+                z-index: 10;
+            }
+
+            .download-dropdown:hover .dropdown-content {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            .dropdown-content a {
+                display: block;
+                padding: 12px 20px;
+                color: #e2e8f0;
+                text-decoration: none;
+                font-size: 1.1rem;
+                transition: all 0.2s ease;
+                position: relative;
+            }
+
+            .dropdown-content a:hover {
+                background: rgba(59, 130, 246, 0.2);
+                color: #60a5fa;
+                padding-left: 25px;
+            }
+
+            .dropdown-content a::before {
+                content: "";
+                position: absolute;
+                left: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 6px;
+                height: 6px;
+                background: #60a5fa;
+                border-radius: 50%;
+                opacity: 0;
+                transition: opacity 0.2s ease;
+            }
+
+            .dropdown-content a:hover::before {
+                opacity: 1;
+            }
+
+            .dropdown-content a i {
+                margin-right: 10px;
+                width: 20px;
+                text-align: center;
+            }
+
+            .features {
+                display: flex;
+                justify-content: center;
+                gap: 40px;
+                margin-top: 40px;
+                flex-wrap: wrap;
+            }
+
+            .feature-card {
+                background: rgba(30, 41, 59, 0.6);
+                border-radius: 15px;
+                padding: 30px;
+                width: 280px;
+                text-align: center;
+                transition: transform 0.3s ease;
+                border: 1px solid rgba(100, 116, 139, 0.3);
+            }
+
+            .feature-card:hover {
+                transform: translateY(-10px);
+                background: rgba(30, 41, 59, 0.8);
+            }
+
+            .feature-icon {
+                font-size: 3rem;
+                margin-bottom: 20px;
+                color: #60a5fa;
+            }
+
+            .feature-title {
+                font-size: 1.4rem;
+                margin-bottom: 15px;
+                color: #e2e8f0;
+            }
+
+            .feature-desc {
+                color: #94a3b8;
+                line-height: 1.6;
+            }
+
+            footer {
+                text-align: center;
+                padding: 30px 0;
+                margin-top: auto;
+                color: #64748b;
+                font-size: 1rem;
+                border-top: 1px solid rgba(100, 116, 139, 0.2);
+            }
+
+            /* 响应式设计 */
+            @media (max-width: 768px) {
+                header {
+                    flex-direction: column;
+                    gap: 20px;
+                }
+
+                nav ul {
+                    gap: 15px;
+                }
+
+                .typewriter {
+                    font-size: 2.5rem;
+                }
+
+                .subtitle {
+                    font-size: 1.2rem;
+                }
+
+                .btn {
+                    padding: 12px 25px;
+                    font-size: 1rem;
+                }
+
+                .download-dropdown {
+                    width: 100%;
+                }
+
+                .dropdown-content {
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 粒子背景 -->
+        <div id="particles-js"></div>
+
+        <div class="container">
+            <header>
+                <div class="logo">
+                    <i class="fas fa-dog logo-icon"></i>
+                    <div class="logo-text">DoglinkOS-2nd</div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="features.html">特性</a></li>
+                        <li><a href="documents.html">文档</a></li>
+                        <li><a href="community.html">社区</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <section class="hero">
+                    <div class="typewriter-container">
+                        <h1 class="typewriter" id="typewriter"></h1>
+                    </div>
+                    <p class="subtitle">
+                        DoglinkOS-2nd
+                        是下一代开源操作系统，专为开发者、创作者和技术爱好者设计。轻量、高效、安全，提供无与伦比的用户体验。
+                    </p>
+                    <div class="buttons">
+                        <a
+                            href="https://github.com/Doglinkify/DoglinkOS-2nd"
+                            target="_blank"
+                            class="btn btn-primary"
+                        >
+                            <i class="fab fa-github"></i> GitHub 源码
+                        </a>
+
+                        <div class="download-dropdown">
+                            <a href="#" class="btn btn-secondary">
+                                <i class="fas fa-download"></i> 立即下载
+                            </a>
+                            <div class="dropdown-content">
+                                <a
+                                    href="https://github.com/Doglinkify/DoglinkOS-2nd/releases/latest"
+                                    target="_blank"
+                                >
+                                    <i class="fas fa-shield-alt"></i> 最新稳定版
+                                </a>
+                                <a
+                                    href="https://github.com/Doglinkify/DoglinkOS-2nd/actions"
+                                    target="_blank"
+                                >
+                                    <i class="fas fa-bolt"></i> 最新快照版
+                                </a>
+                                <a href="old.html" target="_blank">
+                                    <i class="fas fa-archive"></i> 早期旧版
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="features">
+                        <div class="feature-card">
+                            <i class="fas fa-lock-open feature-icon"></i>
+                            <h3 class="feature-title">完全开源</h3>
+                            <p class="feature-desc">
+                                整个系统在GPLv3许可下开源，代码完全透明，接受社区贡献
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-sync-alt feature-icon"></i>
+                            <h3 class="feature-title">持续更新</h3>
+                            <p class="feature-desc">
+                                每两周发布一次更新，每月发布一个功能版本
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-shield-alt feature-icon"></i>
+                            <h3 class="feature-title">安全可靠</h3>
+                            <p class="feature-desc">
+                                内置安全机制，沙盒环境，保护您的数据和隐私
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <footer>
+            <p>© 2025 DoglinkOS-2nd 项目 | 遵循 GPLv3 开源协议 | 由社区驱动</p>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+        <script>
+            // 打字机效果
+            const text = "开源，开放，免费";
+            let index = 0;
+            const speed = 150;
+            const typewriter = document.getElementById("typewriter");
+
+            function type() {
+                if (index < text.length) {
+                    typewriter.innerHTML += text.charAt(index);
+                    index++;
+                    setTimeout(type, speed);
+                } else {
+                    // 添加闪烁光标
+                    typewriter.innerHTML += '<span class="cursor"></span>';
+                }
+            }
+
+            // 页面加载完成后开始打字
+            document.addEventListener("DOMContentLoaded", function () {
+                setTimeout(type, 1000);
+            });
+
+            // 粒子背景配置
+            particlesJS("particles-js", {
+                particles: {
+                    number: {
+                        value: 80,
+                        density: { enable: true, value_area: 800 },
+                    },
+                    color: { value: "#60a5fa" },
+                    shape: {
+                        type: "circle",
+                        stroke: { width: 0, color: "#000000" },
+                    },
+                    opacity: { value: 0.5, random: true },
+                    size: { value: 3, random: true },
+                    move: {
+                        enable: true,
+                        speed: 2,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false,
+                    },
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "repulse" },
+                        onclick: { enable: true, mode: "push" },
+                        resize: true,
+                    },
+                },
+            });
+
+            // 按钮悬停效果增强
+            document.querySelectorAll(".btn").forEach((btn) => {
+                btn.addEventListener("mouseenter", function () {
+                    this.style.transform = "translateY(-5px)";
+                    this.style.boxShadow = "0 8px 25px rgba(59, 130, 246, 0.4)";
+                });
+
+                btn.addEventListener("mouseleave", function () {
+                    this.style.transform = "translateY(0)";
+                    this.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.2)";
+                });
+            });
+        </script>
+    </body>
+</html>
