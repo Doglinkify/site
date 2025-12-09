@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>DoglinkOS-2nd | 开源操作系统</title>
+        <title>DoglinkOS-2nd | Open Source Operating System</title>
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -70,6 +70,7 @@
                 display: flex;
                 list-style: none;
                 gap: 30px;
+                align-items: center;
             }
 
             nav a {
@@ -98,6 +99,27 @@
 
             nav a:hover::after {
                 width: 100%;
+            }
+
+            /* Language switcher button */
+            .language-switcher {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 8px 16px;
+                background: rgba(37, 99, 235, 0.2);
+                border-radius: 50px;
+                border: 1px solid rgba(59, 130, 246, 0.3);
+                transition: all 0.3s ease;
+            }
+
+            .language-switcher:hover {
+                background: rgba(59, 130, 246, 0.3);
+                transform: translateY(-2px);
+            }
+
+            .language-switcher i {
+                color: #60a5fa;
             }
 
             .hero {
@@ -314,7 +336,7 @@
                 border-top: 1px solid rgba(100, 116, 139, 0.2);
             }
 
-            /* 响应式设计 */
+            /* Responsive Design */
             @media (max-width: 768px) {
                 header {
                     flex-direction: column;
@@ -323,6 +345,8 @@
 
                 nav ul {
                     gap: 15px;
+                    flex-wrap: wrap;
+                    justify-content: center;
                 }
 
                 .typewriter {
@@ -349,7 +373,7 @@
         </style>
     </head>
     <body>
-        <!-- 粒子背景 -->
+        <!-- Particles Background -->
         <div id="particles-js"></div>
 
         <div class="container">
@@ -360,14 +384,14 @@
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="index.html">首页</a></li>
-                        <li><a href="features.html">特性</a></li>
-                        <li><a href="documents.html">文档</a></li>
-                        <li><a href="community.html">社区</a></li>
+                        <li><a href="index_en.html">Home</a></li>
+                        <li><a href="features_en.html">Features</a></li>
+                        <li><a href="documents_en.html">Documents</a></li>
+                        <li><a href="community_en.html">Community</a></li>
                         <li>
-                            <a href="index_en.html" class="language-switcher">
+                            <a href="index.html" class="language-switcher">
                                 <i class="fas fa-globe"></i>
-                                <span>English</span>
+                                <span>中文</span>
                             </a>
                         </li>
                     </ul>
@@ -380,8 +404,10 @@
                         <h1 class="typewriter" id="typewriter"></h1>
                     </div>
                     <p class="subtitle">
-                        DoglinkOS-2nd
-                        是下一代开源操作系统，专为开发者、创作者和技术爱好者设计。轻量、高效、安全，提供无与伦比的用户体验。
+                        DoglinkOS-2nd is the next-generation open source
+                        operating system, designed for developers, creators, and
+                        tech enthusiasts. Lightweight, efficient, secure,
+                        providing an unparalleled user experience.
                     </p>
                     <div class="buttons">
                         <a
@@ -389,28 +415,30 @@
                             target="_blank"
                             class="btn btn-primary"
                         >
-                            <i class="fab fa-github"></i> GitHub 源码
+                            <i class="fab fa-github"></i> GitHub Source
                         </a>
 
                         <div class="download-dropdown">
                             <a href="#" class="btn btn-secondary">
-                                <i class="fas fa-download"></i> 立即下载
+                                <i class="fas fa-download"></i> Download Now
                             </a>
                             <div class="dropdown-content">
                                 <a
                                     href="https://github.com/Doglinkify/DoglinkOS-2nd/releases/latest"
                                     target="_blank"
                                 >
-                                    <i class="fas fa-shield-alt"></i> 最新稳定版
+                                    <i class="fas fa-shield-alt"></i> Latest
+                                    Stable
                                 </a>
                                 <a
                                     href="https://github.com/Doglinkify/DoglinkOS-2nd/actions"
                                     target="_blank"
                                 >
-                                    <i class="fas fa-bolt"></i> 最新快照版
+                                    <i class="fas fa-bolt"></i> Latest Snapshot
                                 </a>
-                                <a href="old.html" target="_blank">
-                                    <i class="fas fa-archive"></i> 早期旧版
+                                <a href="old_en.html" target="_blank">
+                                    <i class="fas fa-archive"></i> Early Old
+                                    Versions
                                 </a>
                             </div>
                         </div>
@@ -419,23 +447,27 @@
                     <div class="features">
                         <div class="feature-card">
                             <i class="fas fa-lock-open feature-icon"></i>
-                            <h3 class="feature-title">完全开源</h3>
+                            <h3 class="feature-title">Fully Open Source</h3>
                             <p class="feature-desc">
-                                整个系统在GPLv3许可下开源，代码完全透明，接受社区贡献
+                                The entire system is open source under GPLv3
+                                license, code is completely transparent,
+                                accepting community contributions
                             </p>
                         </div>
                         <div class="feature-card">
                             <i class="fas fa-sync-alt feature-icon"></i>
-                            <h3 class="feature-title">持续更新</h3>
+                            <h3 class="feature-title">Continuous Updates</h3>
                             <p class="feature-desc">
-                                每两周发布一次更新，每月发布一个功能版本
+                                Updates every two weeks, feature releases every
+                                month
                             </p>
                         </div>
                         <div class="feature-card">
                             <i class="fas fa-shield-alt feature-icon"></i>
-                            <h3 class="feature-title">安全可靠</h3>
+                            <h3 class="feature-title">Secure & Reliable</h3>
                             <p class="feature-desc">
-                                内置安全机制，沙盒环境，保护您的数据和隐私
+                                Built-in security mechanisms, sandbox
+                                environment, protecting your data and privacy
                             </p>
                         </div>
                     </div>
@@ -444,13 +476,16 @@
         </div>
 
         <footer>
-            <p>© 2025 DoglinkOS-2nd 项目 | 遵循 GPLv3 开源协议 | 由社区驱动</p>
+            <p>
+                © 2025 DoglinkOS-2nd Project | Licensed under GPLv3 | Community
+                Driven
+            </p>
         </footer>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
         <script>
-            // 打字机效果
-            const text = "开源，开放，自由";
+            // Typewriter effect
+            const text = "Open Source, Open Community, Free & Libre";
             let index = 0;
             const speed = 150;
             const typewriter = document.getElementById("typewriter");
@@ -461,17 +496,17 @@
                     index++;
                     setTimeout(type, speed);
                 } else {
-                    // 添加闪烁光标
+                    // Add blinking cursor
                     typewriter.innerHTML += '<span class="cursor"></span>';
                 }
             }
 
-            // 页面加载完成后开始打字
+            // Start typing after page loads
             document.addEventListener("DOMContentLoaded", function () {
                 setTimeout(type, 1000);
             });
 
-            // 粒子背景配置
+            // Particles background configuration
             particlesJS("particles-js", {
                 particles: {
                     number: {
@@ -505,7 +540,7 @@
                 },
             });
 
-            // 按钮悬停效果增强
+            // Enhanced button hover effects
             document.querySelectorAll(".btn").forEach((btn) => {
                 btn.addEventListener("mouseenter", function () {
                     this.style.transform = "translateY(-5px)";
